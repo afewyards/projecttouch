@@ -12,7 +12,7 @@ define([], function () {
         tagName: 'div',
         className: 'level',
         previousLevel: null,
-        level: 1,
+        level: 0,
 
         initialize: function () {
             _.bindAll(this, 'mouseDownRight', 'trim', 'setLevel');
@@ -22,10 +22,15 @@ define([], function () {
             };
             this.levelWidth = 235;
             this.scrubberOffset = 22;
-            this.level = 1;
-            this.prevLevel = 1;
+            this.level = 0;
+            this.prevLevel = 0;
             this.holder = this.$('.holder')[0];
             this.render();
+            
+            if(this.options.type === 'scale') {
+                this.setPositions((1 - 0.5) * this.levelWidth);
+            }
+            
         },
 
         render: function () {
@@ -68,9 +73,15 @@ define([], function () {
             
         },
 
-        setLevel: function (level) {
+        setLevel: function (level, force) {
 
             var paddingRight;
+            
+            if (force) {
+                this.level = level
+                return;
+            }
+            
 
             if (this.options.type === 'rotation') {
                 if (this.prevLevel === 180 && level < 170) {
@@ -84,7 +95,6 @@ define([], function () {
             } else if (this.options.type === 'scale') {
                 //scale is 0 -10
                 var scale = level;
-                
                 var step = 0.05;
                 
                 

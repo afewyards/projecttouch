@@ -99,9 +99,10 @@ define(['app/views/panel',
             this.rotationView.model = model;
             this.volumeView.model = model;
 
-            this.scaleView.setLevel(model.get('scale'));
-            this.rotationView.setLevel(model.get('rotation'));
-            this.volumeView.setLevel(model.get('volume'));
+            this.scaleView.setLevel(model.get('scale'), true);
+            this.rotationView.setLevel(model.get('rotation'), true);
+            this.volumeView.setLevel(model.get('volume'), true);
+            
             $('#library').slideUp(500, function () {
                 $('#edit').slideDown(500);
             });
